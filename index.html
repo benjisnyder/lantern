@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Lantern</title>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="js/lantern.js" type="text/javascript"></script>
+<script src="js/root.js" type="text/javascript"></script>
+
+<style type="text/css">
+body {
+	font-family: Arial, "sans-serif";
+	font-size: 13px;
+	line-height: 18px;
+	padding: 0 290px;
+	color:#1d1d1d;
+}
+* {
+	box-sizing: border-box;
+}
+h1 em, .card h1 em {
+	display: inline-block;
+	font-size:12px;
+	color:#999;
+}
+a {
+	color: #003fa6;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+#app {
+	position: absolute;
+	top:0;
+	right:276px;
+	bottom: 0;
+	left:276px;
+	overflow: auto;
+}
+#app_wrap {
+	width: 500px;
+	margin:35px auto;
+}
+#box {
+	width:100%;
+	height:150px;
+	margin: 0;
+}
+#box_holder {
+	margin:0 0 35px;
+	padding:0 12px 12px;
+}
+#buttons {
+	margin: 20px 0;
+	text-align: right;
+}
+.button {
+	display: inline-block;
+	border: 1px solid #4b6002;
+	padding:6px 13px;
+	background: #8bb400;
+	border-radius: 3px;
+	color: #fff;
+	text-decoration: none;
+}
+#help {
+	width:275px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	border-left: 1px solid #ccc;
+}
+#help h3, #preview h3 {
+	position: absolute;
+	top:0;
+	right:0;
+	left:0;
+	margin:0;
+	padding:15px;
+	border-bottom: 1px solid #ccc;
+}
+#help > ul, #preview > div {
+	position: absolute;
+	top:50px;
+	right:0;
+	bottom:0;
+	left:0;
+	padding: 15px;
+	overflow: auto;
+}
+ul {
+	margin: 0;
+	padding: 0;
+}
+dt {
+	margin: 0 0 5px;
+	font-weight: 700;
+}
+dd {
+	margin: 0 0 10px;
+}
+dd textarea {
+	width: 100%;
+	height: 80px;
+	margin: 10px 0 15px;
+	border: 1px solid rgba(0, 0, 0, .1);
+	background: #fffcb5;
+	padding:10px;
+	border-radius: 3px;
+}
+dd li {
+	list-style-type: none;
+}
+#preview {
+	width:275px;
+	position: absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	border-right:1px solid #ccc;
+	padding:15px;
+}
+	#preview, #help {
+		background: #fff;
+	}
+.card {
+	position: relative;
+	margin: 0 0 10px;
+	border: 1px solid #ccc;
+	padding: 8px 12px;
+	background-color: #f5f5f5;
+	border-radius: 3px;
+}
+.card strong, .card em, .card .rad {
+	display: block;
+}
+.card .button {
+	display: inline-block;
+}
+.card p {
+	margin: 5px 0 10px;
+}
+.card h4 {
+	margin: 10px 0 5px;
+}
+#contact_pub_card img {
+	display: block;
+	width:25px;
+	height:25px;
+	position: absolute;
+	top:10px;
+	left:10px;
+	border: 1px solid #ccc;
+}
+#contact_pub_card {
+	padding-left: 50px;
+}
+#show_help, #hide_help {
+	font-size: 12px;
+}
+#show_help, #doc_link {
+	position: absolute;
+	top:13px;
+	right: 14px;
+}
+#hide_help {
+	position: absolute;
+	top:13px;
+	right: 14px;
+}
+</style>
+</head>
+
+<body>
+<a id="show_help" href="">Show Help</a>
+
+<div id="app">
+	<div id="app_wrap">
+		<div id="box_holder" class="card">
+			<a id="doc_link" href="https://git.soma.salesforce.com/bsnyder/lantern">Available on GitHub</a>
+			<h1>Lantern</h1>
+			<p>Non-structured client side post & record type recognition.</p>
+			<p>Enter content into this textarea. It recognizes Link Posts, Polls, Contact, Account, and Opportunity</p>
+
+			<textarea id="box"></textarea>
+		</div>
+
+		<div id="feed">
+			<h2>Practical Applications</h2>
+			<h3>Note Taking</h3>
+			<p>Both Service and Sales users heavily rely on note taking while on the phone or in the field. Instead of laboring over converting their messy notes into valid record fields, a Lantern notes widget would do the grunt work for them.</p>
+			<h3>Publishers</h3>
+			<p>Often times a text post is accompanied by record creation. We could save a step by suggesting appropriate record creation from the text post or from a bulk copy/paste of notes. Additionally, users could type naturally structured sentences to post polls or share links with collegues.</p>
+			<h3>Chat Transcript</h3>
+			<p>Whether it's a chat with a visitor in Service Cloud Live Agent or a chat with a peer on chatter chat, it would be nice to have record or post creation extracted from the transcript and one click away.</p>
+		</div>
+	</div>
+</div>
+
+<div id="preview">
+	<h3>Results</h3>
+	<div id="results">
+	</div>
+</div>
+
+<div id="help">
+	<h3>Help</h3>
+	<ul>
+		<dt>Link Post</dt>
+		<dd>Add a link (must have http://) plus an optional title.
+			<textarea>This is a really neat website! http://www.google.com</textarea>
+		</dd>
+
+		<dt>Poll Post</dt>
+		<dd>A "plea" like "Please choose:" or "What do you you want to do?" followed by a line break then a list of choices (dash is required). This would look something like:
+			<textarea>We are going on a team trip. What do you want to do?
+- Option 1
+- Option 2
+- Option 3</textarea>
+		</dd>
+
+		<dt>Contact or Account</dt>
+		<dd>A string that contains a person's name (simple two word; western; proper), phone number, and optional email address.
+			<textarea>Spoke to a new client today, his name is Jose Cruze and his number is 346-453-3456. He said we could contact him via email too: jcruze@somecompany.com</textarea>
+		</dd>
+
+		<dt>Opportunity</dt>
+		<dd>A string that contains a company name (simple proper name followed by a legal entity) and some dollar value (USD) with optional date.
+			<textarea>Company name is Acme Inc founded in 1931 as a bakery. Owner is open to negotiations, have a budget of $320,000 and a deadline of 10/15/2014</textarea>
+			<em>The requirement here that an opportunity contain a legal entity highlights potential for configuration by a customer</em>
+		</dd>
+
+		<dt>From a Chat Transcript</dt>
+		<dd><textarea>Visitor: Hi my name is Indigo Moonshine and I am interested in purchasing your product. Can you tell me more?
+Agent: Hi Indigo, sure thing. This is the best Acme bread slicer there is. It can slice so much bread.
+Visitor: Wow that is great, how much is it?
+Agent: It is $2,345 and comes out on 12/14/2014
+Visitor: My goodness. I am excited. Can you call me when it is ready? 555-678-5645
+Agent: Will do, is there anything else I can help you with, Indigo?
+Visitor: Nope, that will do. Thanks!</textarea></dd>
+
+		<dt>All at Once</dt>
+		<dd><textarea>This is a really neat website! http://www.google.com
+
+We are going on a team trip. What do you want to do?
+- Option 1
+- Option 2
+- Option 3
+
+Spoke to a new client today, his name is Jose Cruze and his number is 346-453-3456. He said we could contact him via email too: jcruze@somecompany.com
+
+Company name is Acme Inc founded in 1931 as a bakery. Owner is open to negotiations, have a budget of $320,000 and a deadline of 10/15/2014</textarea></dd>
+	</ul>
+	<a id="hide_help" href="">Hide Help</a>
+</div>
+
+</body>
+</html>
